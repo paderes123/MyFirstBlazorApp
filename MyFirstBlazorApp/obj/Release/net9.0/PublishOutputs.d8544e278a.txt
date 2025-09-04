@@ -1,0 +1,1 @@
+C:\Users\Bryan Paderes\Source\Repos\MyFirstBlazorApp\MyFirstBlazorApp\obj\Release\net9.0\browser-wasm\PubTmp\Out\web.config
