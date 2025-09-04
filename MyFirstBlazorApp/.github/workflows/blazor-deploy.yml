@@ -1,0 +1,30 @@
+﻿name: Deploy Blazor WebAssembly to GitHub Pages
+
+on:
+  push:
+    branches: [ "master" ]   # change if your repo uses "main"
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 9.0.x   # use 8.0.x if your project targets .NET 8
+
+    - name: Publish Blazor WebAssembly
+      run: dotnet publish -c Release -o release
+
+    - name: Fix base href
+      run: sed -i 's|<base href="/" />|<base href="/MyFirstBlazorApp/" />|' release/wwwroot/index.html
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: release/wwwroot
